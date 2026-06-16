@@ -270,12 +270,12 @@ Validation included:
 
 # Repository Structure
 
+```
 aws-wordpress-mysql-migration/
-│
-├── terraform/
+├── Terraform/
 │   ├── provider.tf
 │   ├── variables.tf
-│   ├── terraform.tfvars.example
+│   ├── terraform.tfvars
 │   ├── networking.tf
 │   ├── security.tf
 │   ├── iam.tf
@@ -284,17 +284,15 @@ aws-wordpress-mysql-migration/
 │   ├── s3.tf
 │   ├── cloudwatch.tf
 │   └── outputs.tf
-│
-├── ansible/
-│   ├── inventory.ini.example
+├── Ansible/
+│   ├── inventory.ini
 │   ├── playbook.yml
-│   └── templates/
-│       └── wp-config.php.j2
-│
+│   └── wp-config.php.j2
+├── Database/
+│   └── sample_backup.sql
 ├── screenshots/
-│
-│
-└── README.md
+├── README.md
+```
 
 ---
 
