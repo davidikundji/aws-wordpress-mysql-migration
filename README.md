@@ -16,34 +16,29 @@ This project demonstrates Infrastructure as Code (IaC), Configuration Management
 ## Architecture Diagram
 
 ```text
-        Internet
-      │
-    Internet Gateway
-      │
-  ┌──────────────────────────┐
-  │         AWS VPC          │
-  │       10.0.0.0/16        │
-  └──────────────────────────┘
-    │            │
-    │            │
-  ┌─────────────┐ ┌─────────────┐
-  │ Public      │ │ Private     │
-  │ Subnet      │ │ Subnet      │
-  │10.0.1.0/24  │ │10.0.2.0/24  │
-  └─────────────┘ └─────────────┘
-    │                │
-    │                │
-  ┌─────────────┐   ┌─────────────┐
-  │ EC2 Ubuntu  │   │ Amazon RDS  │
-  │ Apache/PHP  │──▶│ MySQL 8.0  │
-  │ WordPress   │   │ company_db  │
-  └─────────────┘   └─────────────┘
-    │
-    │
-  ┌─────────────┐
-  │ Amazon S3   │
-  │ SQL Backup  │
-  └─────────────┘
+          ┌──────────────────────────┐
+          │        AWS VPC           │
+          │ (10.0.0.0/16 Network)    │
+          └──────────────────────────┘
+           /            \\
+          /              \\
+     ┌───────────────────┐  ┌────────────────────┐
+     │   Public Subnet   │  │   Private Subnet   │
+     │    (10.0.1.0/24)  │  │    (10.0.2.0/24)   │
+     └───────────────────┘  └────────────────────┘
+       │                        │
+       │                        │
+      ┌──────────────┐        ┌──────────────┐
+      │  EC2 Server  │        │  RDS MySQL   │
+      │ WordPress +  │        │ (company_db) │
+      │ Apache / PHP │        └──────────────┘
+      └──────────────┘
+       │
+       │
+      ┌──────────────┐
+      │  S3 Bucket   │
+      │  (backup.sql)│
+      └──────────────┘
 
 Terraform → Infrastructure Provisioning
 Ansible → Configuration Management
