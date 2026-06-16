@@ -15,31 +15,41 @@ This project demonstrates Infrastructure as Code (IaC), Configuration Management
 
 ## Architecture Diagram
 
-```mermaid
-flowchart TB
-  Internet[Internet] --> IGW[Internet Gateway]
-  IGW --> VPC[AWS VPC\n10.0.0.0/16]
+```text
+        Internet
+      │
+    Internet Gateway
+      │
+  ┌──────────────────────────┐
+  │         AWS VPC          │
+  │       10.0.0.0/16        │
+  └──────────────────────────┘
+    │            │
+    │            │
+  ┌─────────────┐ ┌─────────────┐
+  │ Public      │ │ Private     │
+  │ Subnet      │ │ Subnet      │
+  │10.0.1.0/24  │ │10.0.2.0/24  │
+  └─────────────┘ └─────────────┘
+    │                │
+    │                │
+  ┌─────────────┐   ┌─────────────┐
+  │ EC2 Ubuntu  │   │ Amazon RDS  │
+  │ Apache/PHP  │──▶│ MySQL 8.0  │
+  │ WordPress   │   │ company_db  │
+  └─────────────┘   └─────────────┘
+    │
+    │
+  ┌─────────────┐
+  │ Amazon S3   │
+  │ SQL Backup  │
+  └─────────────┘
 
-  subgraph Public_Subnet[Public Subnet\n10.0.1.0/24]
-    EC2[EC2 Ubuntu\nApache / PHP\nWordPress]
-  end
-
-  subgraph Private_Subnet[Private Subnet\n10.0.2.0/24]
-    RDS[Amazon RDS\nMySQL 8.0\ncompany_db]
-  end
-
-  VPC --> Public_Subnet
-  VPC --> Private_Subnet
-  Public_Subnet --> EC2
-  Private_Subnet --> RDS
-  EC2 -->|downloads/ restores backup from| S3[Amazon S3\nSQL Backup]
+Terraform → Infrastructure Provisioning
+Ansible → Configuration Management
+CloudWatch → Monitoring & Alerting
+IAM Role → Secure S3 Access
 ```
-
-- Terraform: Infrastructure provisioning
-- Ansible: Configuration management
-- CloudWatch: Monitoring & alerting
-- IAM Role: Secure S3 access
-
 ---
 
 ---
